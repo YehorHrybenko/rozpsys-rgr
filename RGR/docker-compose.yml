@@ -16,9 +16,9 @@ services:
     build:
       context: .
       dockerfile: API/Dockerfile
-    # deploy:
-    #   mode: replicated
-    #   replicas: 3
+    deploy:
+      mode: replicated
+      replicas: 3
   orchestrator:
     container_name: orchestrator
     image: ${DOCKER_REGISTRY-}orchestrator
@@ -40,9 +40,9 @@ services:
     build:
       context: .
       dockerfile: Worker/Dockerfile
-    # deploy:
-    #   mode: replicated
-    #   replicas: 3
+    deploy:
+      mode: replicated
+      replicas: 3
     environment:
         - "RMQ_HOST=rabbitmq"
         - "RMQ_PORT=5672"
@@ -55,11 +55,6 @@ services:
     build:
       context: .
       dockerfile: WorkerSync/Dockerfile
-    # environment:
-    #     - "RMQ_HOST=rabbitmq"
-    #     - "RMQ_PORT=5672"
-    #     - "RMQ_USERNAME=rabbitmquser"
-    #     - "RMQ_PASSWORD=rabbitmqpassword"
     ports:
       - "5000:8080"
       - "5001:8081"
