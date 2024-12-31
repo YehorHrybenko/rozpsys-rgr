@@ -123,7 +123,9 @@ app.MapPost("/process", async ([FromBody] UpdateRequest input) =>
     sw.Stop();
     Console.WriteLine($"Calculations took: {sw.ElapsedMilliseconds} ms");
 
-    (await response).EnsureSuccessStatusCode();
+    var storageSaveResult = await response;
+    storageSaveResult.EnsureSuccessStatusCode();
+    Console.WriteLine($"{await storageSaveResult.Content.ReadAsStringAsync()}");
 
     var res = JsonConvert.SerializeObject(results.ToDictionary(p => p.Item1, p => p.Item2));
     return res;
